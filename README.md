@@ -1,12 +1,12 @@
 ### `README.md`
 
-```markdown
 # 주차장 키오스크 시스템
 
 ## 개요
 PyQT6를 활용한 주차장 키오스크 프론트 화면입니다. (PyQT6 실습을 통해 제작했습니다.)
 
 ## 프로젝트 구조
+
 ```
 parking_kiosk/
 ├── main.py
