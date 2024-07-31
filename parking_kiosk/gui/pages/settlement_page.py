@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy, QHBoxLayout
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
-from components.gif_widget import GifWidget
 from PyQt6.QtCore import QTimer
+from gui.components.gif_widget import GifWidget
 
 class SettlementPage(QWidget):
     def __init__(self, vehicle_info, main_window, parent=None):
@@ -86,22 +86,22 @@ class SettlementPage(QWidget):
         layout.addWidget(settle_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # 뒤로가기 버튼
-        back_button = QPushButton(self)
-        back_button.setFixedSize(60, 60)
-        back_button.setStyleSheet("""
-            background-color: #FFB300; 
-            font-size: 30px; 
-            border-radius: 30px;
-        """)
-        back_button.setText("↩")
-        back_button.clicked.connect(self.go_back)
-        layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignRight)
+        # back_button = QPushButton(self)
+        # back_button.setFixedSize(60, 60)
+        # back_button.setStyleSheet("""
+        #     background-color: #FFB300; 
+        #     font-size: 30px; 
+        #     border-radius: 30px;
+        # """)
+        # back_button.setText("↩")
+        # back_button.clicked.connect(self.go_back)
+        # layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignRight)
 
     def go_back(self):
         self.parent().stacked_widget.setCurrentWidget(self.parent().exit_page)
         
     def show_gif_widget(self):
-        gif_widget = GifWidget("res/test.gif", duration=3000, parent=self)
+        gif_widget = GifWidget("parking_kiosk\\gui\\res\\car-anime.gif", duration=3000, parent=self)
         gif_widget.move(self.rect().center() - gif_widget.rect().center())
         gif_widget.start()
         QTimer.singleShot(3000, self.return_to_main)

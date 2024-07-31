@@ -1,9 +1,9 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout
 from PyQt6.QtCore import Qt
-from components.top_label import TopLabel
-from components.enter_number_plate import EnterNumberPlate
-from components.keypad import Keypad
-from components.park_button import ParkButton
+from gui.components.top_label import TopLabel
+from gui.components.enter_number_plate import EnterNumberPlate
+from gui.components.keypad import Keypad
+from gui.components.park_button import ParkButton
 
 # 입차 페이지
 class EntryPage(QWidget):
@@ -35,4 +35,8 @@ class EntryPage(QWidget):
         layout.addWidget(self.park_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # 자동주차하기 버튼 클릭 시 GIF 재생 및 메인 화면으로 돌아가기
-        self.park_button.button.clicked.connect(self.main_window.show_gif_widget)
+        self.park_button.button.clicked.connect(self.on_park_button_clicked)
+        
+    def on_park_button_clicked(self):
+        license_plate = self.number_plate_labels.get_all_label_text()
+        self.main_window.confirm_enter(license_plate)

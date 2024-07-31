@@ -37,9 +37,11 @@ class Keypad(QWidget):
 
     def handle_confirm(self):
         if self.mode == 'entry':
-            self.main_window.show_gif_widget()  # 입차 모드일 때만 GIF를 표시합니다.
+            license_plate = self.number_plate_labels.get_all_label_text()
+            self.main_window.confirm_enter(license_plate)  # 입차 모드일 때만 GIF를 표시합니다.
         elif self.mode == 'exit':
-            self.main_window.show_vehicle_selection_page()  # 출차 모드일 때 차량 리스트 페이지를 표시합니다.
+            license_plate = self.number_plate_labels.get_all_label_text()
+            self.main_window.show_vehicle_selection_page(license_plate)  # 출차 모드일 때 차량 리스트 페이지를 표시합니다.
 
     def create_cheonjiin_keyboard(self):
         # 천지인 키패드를 생성합니다.

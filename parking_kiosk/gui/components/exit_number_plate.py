@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
-from components.clickable_label import ClickableLabel
 from PyQt6.QtCore import Qt
+from gui.components.clickable_label import ClickableLabel
 
 class ExitNumberPlate(QWidget):
     def __init__(self, parent=None):
@@ -36,3 +36,6 @@ class ExitNumberPlate(QWidget):
         for label in self.car_number_labels:
             label.setText(" ")
         self.current_index = 0
+        
+    def get_all_label_text(self):
+        return ''.join(label.text() for label in self.car_number_labels)

@@ -45,7 +45,7 @@ class VehicleListItem(QWidget):
         
         # vehicle info
         self.vehicle_info = {
-            'image_path': 'res/car1.png',
+            'image_path': 'parking_kiosk\\gui\\res\\test-image1.png',
             'plate_number': '19오 7777',
             'duration': '43분',
             'entry_time': '07-23 20:03',

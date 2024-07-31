@@ -1,18 +1,21 @@
+import datetime
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QStackedWidget
-from components.main_button import MainButton
-from components.top_label import TopLabel
-from components.enter_number_plate import EnterNumberPlate
-from components.keypad import Keypad
-from components.park_button import ParkButton
-from pages.settlement_page import SettlementPage
 from PyQt6.QtCore import Qt, QTimer
-from pages.exit_page import ExitPage
-from pages.entry_page import EntryPage
-from components.gif_widget import GifWidget
-from pages.vehicle_selection_page import VehicleSelectionPage
+from gui.components.main_button import MainButton
+from gui.components.top_label import TopLabel
+from gui.components.enter_number_plate import EnterNumberPlate
+from gui.components.keypad import Keypad
+from gui.components.park_button import ParkButton
+from gui.components.gif_widget import GifWidget
+from gui.pages.settlement_page import SettlementPage
+from gui.pages.exit_page import ExitPage
+from gui.pages.entry_page import EntryPage
+from gui.pages.vehicle_selection_page import VehicleSelectionPage
+from core.handlers import handle_enter, handle_exit, handle_get_vehicles
+from core.camera import get_vehicle_image
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, mqtt_client):
         super(MainWindow, self).__init__()
         self.setWindowTitle("주차장 키오스크")
         self.setGeometry(100, 100, 400, 600)
@@ -34,7 +37,7 @@ class MainWindow(QMainWindow):
         self.main_button.exit_button.clicked.connect(self.show_exit_page)
         self.stacked_widget.addWidget(self.main_button)
 
-        # # 입차 페이지
+        # 입차 페이지
         self.entry_page = EntryPage(self)
         self.stacked_widget.addWidget(self.entry_page)
         
@@ -42,37 +45,36 @@ class MainWindow(QMainWindow):
         self.exit_page = ExitPage(self)
         self.stacked_widget.addWidget(self.exit_page)
 
+    # 입차 페이지
     def show_entry_page(self):
         self.stacked_widget.setCurrentWidget(self.entry_page)
 
+    # 출차 페이지
     def show_exit_page(self):
         self.stacked_widget.setCurrentWidget(self.exit_page)
-    
+        
+    # 입차 처리
+    def confirm_enter(self, license_plate):
+        self.show_gif_widget()
+        handle_enter(get_vehicle_image(), license_plate, datetime.datetime.now())
+       
+    def confirm_exit(self, license_plate):
+        pass
+        
     def show_settlement_page(self, vehicle_info):
         settlement_page = SettlementPage(vehicle_info, self)
         self.stacked_widget.addWidget(settlement_page)
         self.stacked_widget.setCurrentWidget(settlement_page)
         
     def show_gif_widget(self):
-        gif_widget = GifWidget("res/test.gif", duration=3000, parent=self)
+        gif_widget = GifWidget("parking_kiosk\gui\\res\car-anime.gif", duration=3000, parent=self)
         gif_widget.move(self.rect().center() - gif_widget.rect().center())
         gif_widget.start()
         QTimer.singleShot(3000, self.return_to_main)
 
-    def show_vehicle_selection_page(self):
-        vehicles = [
-            {
-                'image_path': 'res/car1.png',
-                'plate_number': '19오 7777',
-                'duration': '43분'
-            },
-            {
-                'image_path': 'res/car2.png',
-                'plate_number': '77소 7777',
-                'duration': '1시간 7분'
-            },
-            # 다른 차량 정보를 추가하세요.
-        ]
+    def show_vehicle_selection_page(self, license_plate):
+        vehicles = handle_get_vehicles(license_plate)
+        
         vehicle_selection_page = VehicleSelectionPage(vehicles, self)
         self.stacked_widget.addWidget(vehicle_selection_page)
         self.stacked_widget.setCurrentWidget(vehicle_selection_page)

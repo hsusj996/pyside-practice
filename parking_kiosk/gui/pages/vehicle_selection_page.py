@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpacerItem, QSizePolicy, QPushButton
 from PyQt6.QtCore import Qt
-from components.vehicle_list_item import VehicleListItem
+from gui.components.vehicle_list_item import VehicleListItem
 
 class VehicleSelectionPage(QWidget):
     def __init__(self, vehicles, main_window, parent=None):
@@ -26,16 +26,16 @@ class VehicleSelectionPage(QWidget):
         layout.addSpacerItem(spacer)
 
         # 뒤로가기 버튼
-        back_button = QPushButton(self)
-        back_button.setFixedSize(60, 60)
-        back_button.setStyleSheet("""
-            background-color: #FFB300; 
-            font-size: 30px; 
-            border-radius: 30px;
-        """)
-        back_button.setText("↩")
-        back_button.clicked.connect(self.go_back)
-        layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignRight)
+        # back_button = QPushButton(self)
+        # back_button.setFixedSize(60, 60)
+        # back_button.setStyleSheet("""
+        #     background-color: #FFB300; 
+        #     font-size: 30px; 
+        #     border-radius: 30px;
+        # """)
+        # back_button.setText("↩")
+        # back_button.clicked.connect(self.go_back)
+        # layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignRight)
 
     def go_back(self):
         self.parent().stacked_widget.setCurrentWidget(self.parent().exit_page)

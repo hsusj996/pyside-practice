@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
-from components.clickable_label import ClickableLabel
 from PyQt6.QtCore import Qt
+from gui.components.clickable_label import ClickableLabel
 
 class EnterNumberPlate(QWidget):
     def __init__(self, parent=None):
@@ -66,3 +66,7 @@ class EnterNumberPlate(QWidget):
         
     def set_keypad(self, keypad):
         self.keypad = keypad  # 키패드를 설정하는 메서드를 추가합니다.
+        
+    def get_all_label_text(self):
+        return ''.join(label.text() for label in self.car_number_labels)
+    
