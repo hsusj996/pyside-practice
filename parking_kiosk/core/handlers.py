@@ -2,6 +2,7 @@
 
 import base64
 import json
+import os
 import requests
 
 def handle_enter(image_path, license_plate, entrance_time):
@@ -27,6 +28,7 @@ def handle_enter(image_path, license_plate, entrance_time):
     
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
+    os.remove('./result/temp_image.jpeg')
 
 def handle_exit():
     print('출차 명령 전송 완료')
