@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentWidget(settlement_page)
         
     def show_gif_widget(self):
-        gif_widget = GifWidget("parking_kiosk\gui\\res\car-anime.gif", duration=3000, parent=self)
+        gif_widget = GifWidget("parking_kiosk/gui/res/car-anime.gif", duration=3000, parent=self)
         gif_widget.move(self.rect().center() - gif_widget.rect().center())
         gif_widget.start()
         QTimer.singleShot(3000, self.return_to_main)
